@@ -31,7 +31,7 @@ export async function getSinglePhotos(photoId){
         }
       );
       const payload = await response.json();
-      console.log(payload)
+      // console.log(payload)
       return payload;
 
     } catch (error) {
@@ -43,7 +43,7 @@ return await response.json
 export async function getStats(){
   try {
       const response = await fetch(
-        `https://api.unsplash.com/users/janisringli/statistics/`,
+        `https://api.unsplash.com/users/janisringli/`,
         {
           method: "GET",
           headers: new Headers({
@@ -52,6 +52,7 @@ export async function getStats(){
         }
       );
       const payload = await response.json();
+      console.log(payload)
       return payload;
 
     } catch (error) {
