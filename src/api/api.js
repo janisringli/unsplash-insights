@@ -18,10 +18,11 @@ export async function getPhotos(){
   return await response.json
 };
 
-export async function getSinglePhotos(){
+export async function getSinglePhotos(photoId){
   try {
+    console.log(photoId)
       const response = await fetch(
-        `https://api.unsplash.com/photos/93NY0dTeUYE`,
+        `https://api.unsplash.com/photos/${photoId}`,
         {
           method: "GET",
           headers: new Headers({
@@ -30,6 +31,7 @@ export async function getSinglePhotos(){
         }
       );
       const payload = await response.json();
+      console.log(payload)
       return payload;
 
     } catch (error) {
@@ -50,7 +52,6 @@ export async function getStats(){
         }
       );
       const payload = await response.json();
-      console.log(payload)
       return payload;
 
     } catch (error) {
