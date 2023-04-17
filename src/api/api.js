@@ -1,7 +1,7 @@
-export async function getPhotos(){
+export async function getPhotos(username){
     try {
         const response = await fetch(
-          `https://api.unsplash.com/users/janisringli/photos/?per_page=30`,
+          `https://api.unsplash.com/users/${username}/photos/?per_page=30`,
           {
             method: "GET",
             headers: new Headers({
@@ -40,10 +40,11 @@ export async function getSinglePhotos(photoId){
 return await response.json
 };
 
-export async function getStats(){
+export async function getStats(username){
+  const localUsername = username;
   try {
       const response = await fetch(
-        `https://api.unsplash.com/users/janisringli/`,
+        `https://api.unsplash.com/users/${username}/`,
         {
           method: "GET",
           headers: new Headers({
@@ -58,5 +59,6 @@ export async function getStats(){
     } catch (error) {
       console.log(error);
     }
+  
 return await response.json
 };
