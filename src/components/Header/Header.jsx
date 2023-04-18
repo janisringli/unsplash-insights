@@ -1,19 +1,25 @@
 import React from 'react';
 import './Header.css';
-import { useState } from 'react';
-import globals from '../../globals.js';
+import { useState, useContext } from 'react';
+// import globals from '../../globals.js';
+import { UserContext } from '../../App.jsx';
+import { useNavigate } from 'react-router-dom';
 
 function Header() {
-    const [username, setUsername] = useState('');
+    const {username ,setUsername} = useContext(UserContext);
+    const [tempUsername, setTempUsername] = useState("");
+    const navigate = useNavigate();
 
     function handleSubmit(event) {
         event.preventDefault();
-        globals.setUsername(username);
-        console.log(globals.username);
+        setUsername(tempUsername);
+        navigate(`/profile/${tempUsername}`);
+
       }
     
       function handleChange(event) {
-        setUsername(event.target.value);
+        setTempUsername(event.target.value);
+
       }
   return (
     //search input field and search button that gets stored in a variable called username
@@ -23,7 +29,7 @@ function Header() {
             <div className='header-right'>
                 <div className="header-item">About</div>
             <form className="header-search" onSubmit={handleSubmit}>
-                <input className="header-search-input" value={username} type="text" placeholder="Search for username" onChange={handleChange}/>
+                <input className="header-search-input" value={tempUsername} type="text" placeholder="Search for username" onChange={handleChange}/>
                 <button type="submit" className="header-search-button">Search</button>
             </form>
             </div>

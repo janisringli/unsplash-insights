@@ -1,16 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./ProfileView.css";
 import { useState, useEffect } from "react";
 import { getPhotos, getStats } from "../../api/api";
 import heart from "../../assets/heart.svg";
 import MainStat from "../../components/MainStat/MainStat";
 import Header from "../../components/Header/Header";
-import globals from "../../globals.js";
+import { UserContext } from "../../App.jsx";
+import { useParams } from "react-router-dom";
 
 function ProfileView() {
-   
+    const {username, setUsername} = useContext(UserContext);
+    let { urlUsername } = useParams();
+
     const [stats, setStats] = useState({});
     const [photos, setPhotos] = useState([]);
+
+
+    setUsername(urlUsername ?? username);
 
     useEffect(() => {
         async function retrieveData() {
@@ -19,11 +25,12 @@ function ProfileView() {
             setPhotos(photosData);
             setStats(statsData);
         }
-    
-        retrieveData();
         
-    }, []);
-    let username = globals.username
+        retrieveData();
+    
+        
+    }, [username]);
+
     return (
         <div className="App">
 <Header></Header>

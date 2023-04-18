@@ -41,7 +41,6 @@ return await response.json
 };
 
 export async function getStats(username){
-  const localUsername = username;
   try {
       const response = await fetch(
         `https://api.unsplash.com/users/${username}/`,
@@ -53,7 +52,6 @@ export async function getStats(username){
         }
       );
       const payload = await response.json();
-      console.log(payload)
       return payload;
 
     } catch (error) {
