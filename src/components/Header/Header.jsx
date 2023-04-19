@@ -35,7 +35,6 @@ function Header() {
             </div>
         </div>
     </div>
-
   );
 }
 export default Header;

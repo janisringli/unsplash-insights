@@ -42,7 +42,7 @@ function ProfileView() {
                             <div className="profile-name">{stats?.name}</div>
                             <div className="profile-username">@{stats?.username}</div>
                         </div>
-                        <div className="profile-bio">{stats?.bio}</div>
+                        {/* <div className="profile-bio">{stats?.bio}</div> */}
                         <div className="profile-location">{stats?.location}</div>
                     </div>
                     <div className="overall-stats-wrapper">
@@ -63,7 +63,8 @@ function ProfileView() {
                             <div className="downloads"></div>
                             <div className="likes">
                                 <img className="heart-icon" src={heart} alt="" />
-                                {/* <div className="liked-by-user">{photo.liked_by_user}</div> TODO: Find out why this promt is not showing up in view*/}
+                                {/* <div className="liked-by-user">{photo.liked_by_user}</div> */}
+                                 {/* TODO: Find out why this promt is not showing up in view*/}
                                 <div className="likes-amount"> {photo?.likes}</div>
                             </div>
                             </div>

@@ -6,12 +6,16 @@ import './App.css'
 import ProfileView from './views/ProfileView/ProfileView'
 import React, { createContext } from "react";
 import { Route, Routes } from 'react-router-dom'
+import SinglePhotoView from './views/SinglePhotoView/SinglePhotoView'
 
 export const UserContext = createContext({username: "", setUsername: () => {}});
+export const PhotoContext = createContext({photoId: "", setPhotoId: () => {}});
 
 function App() {
   const [username, setUsername] = useState("janisringli");
+  const [photoId, setPhotoId] = useState("")
 const userContext = {username, setUsername};
+const photoContext = {photoId, setPhotoId};
   return (
     <UserContext.Provider value={userContext}>
 
@@ -20,6 +24,7 @@ const userContext = {username, setUsername};
       <Routes>
         <Route path="/profile/:urlUsername"
         element={<ProfileView />}/>
+        <Route path="/photo/:photoId" element={<SinglePhotoView />} Route />
       </Routes>
         {/* <SinglePhotoView></SinglePhotoView> */}
         
