@@ -6,7 +6,7 @@ import { useParams } from "react-router-dom";
 function SinglePhotoView() {
     const [singlePhoto, setSinglePhoto] = useState({});
    // const { photoId } = useParams("93NY0dTeUYE");
- let photoId = "93NY0dTeUYE"
+ let photoId = "0D356Mbgs7o"
     useEffect(() => {
         async function retrieveData() {
         const singlePhotoData = await getSinglePhotos(photoId);
@@ -18,7 +18,6 @@ function SinglePhotoView() {
     
     return (
         <div className="App">
-        <div>Hello World</div>
         <div>
             <div>
                 <img
@@ -27,6 +26,11 @@ function SinglePhotoView() {
                 alt={singlePhoto.alt_description}
                 />
                 <p>id: {singlePhoto.id}</p>
+            </div>
+            <div className="evaluation-wrapper">
+                <div className="evaluation-content">
+                
+                </div>
             </div>
         </div>
         </div>

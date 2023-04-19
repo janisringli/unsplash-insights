@@ -56,7 +56,7 @@ function ProfileView() {
             <section className="photos-wrapper">
                 <div className="photos-content">
                     {photos.map((photo) => (
-                        <div className="photo-item">
+                        <div className="photo-item" key={photo.id}>
                             <img className="photo" src={photo?.urls?.regular} alt="" />
                             <div className="photo-info">
                             <div className="views"></div>
