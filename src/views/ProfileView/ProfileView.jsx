@@ -5,8 +5,11 @@ import { getPhotos, getStats } from "../../api/api";
 import heart from "../../assets/heart.svg";
 import MainStat from "../../components/MainStat/MainStat";
 import Header from "../../components/Header/Header";
+import PhotoFilter from "../../components/PhotoFilter/PhotoFilter"
 import { UserContext } from "../../App.jsx";
 import { useParams } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
+
 
 function ProfileView() {
     const {username, setUsername} = useContext(UserContext);
@@ -14,6 +17,7 @@ function ProfileView() {
 
     const [stats, setStats] = useState({});
     const [photos, setPhotos] = useState([]);
+    let navigateTo = useNavigate();
 
 
     setUsername(urlUsername ?? username);
@@ -31,6 +35,10 @@ function ProfileView() {
         
     }, [username]);
 
+    const handleInsightsClick = (id) => {
+        console.log(id)
+        navigateTo(`/photo/${id}`); // Navigate to the photo's insights page
+      };
     return (
         <div className="App">
 <Header></Header>
@@ -53,20 +61,29 @@ function ProfileView() {
                     </div>
                 </div>
             </section>
+            <section className="filter-section">
+                    <PhotoFilter></PhotoFilter>
+                    </section>
             <section className="photos-wrapper">
+            
                 <div className="photos-content">
+                    
                     {photos.map((photo) => (
-                        <div className="photo-item" key={photo.id}>
+                        <div className="photo-item" key={photo.id} >
+                            <div className="photo-created-at">{photo?.created_at}</div>
                             <img className="photo" src={photo?.urls?.regular} alt="" />
                             <div className="photo-info">
-                            <div className="views"></div>
-                            <div className="downloads"></div>
+                            {/* <div className="views"></div>
+                            <div className="downloads"></div> */}
                             <div className="likes">
                                 <img className="heart-icon" src={heart} alt="" />
                                 {/* <div className="liked-by-user">{photo.liked_by_user}</div> */}
                                  {/* TODO: Find out why this promt is not showing up in view*/}
                                 <div className="likes-amount"> {photo?.likes}</div>
-                            </div>
+                                </div>
+                                <div className="id">{photo.id}</div>
+                                <button onClick={() => handleInsightsClick(photo.id)}>Get Insights</button>
+                            
                             </div>
                         </div>
                     ))}
