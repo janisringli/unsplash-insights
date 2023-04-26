@@ -1,0 +1,47 @@
+.filter-wrapper{
+    position: fixed;
+    width: 100vw;
+    height: 50px;
+
+}
+.filter-content{
+    padding-left: 30px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: baseline;
+    border-bottom: 1px solid gray;
+    background-color: #ffffff;
+}
+.filter-item{
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   text-align: center;
+   /* border-left: 1px solid grey; */
+   border-right: 1px solid grey;
+   gap: 10px;
+
+   height: 100%;
+}
+.filter-item:first-child{
+    border-left: 1px solid grey;
+}
+.image{
+    width: 100px;
+}
+.filter-likes{
+    width: 50px;
+}
+.date{
+    width: 200px;
+}
+.chevronDown{
+    width: 10px;
+    height: auto;
+}
+.chevronDown:hover{
+    cursor: pointer;
+}
