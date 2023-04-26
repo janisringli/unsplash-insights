@@ -1,28 +1,35 @@
+<<<<<<< Updated upstream
 
 .profile-picture{
     border-radius: 500px;
     height: 150px;
+=======
+.profile-picture {
+  border-radius: 500px;
+  height: 150px;
+>>>>>>> Stashed changes
 }
-.overall-content{
-    display: flex;
-    width: 100vw;
-    height: 100%;
-    align-items: center;
-    justify-content: space-between;
+.overall-content {
+  display: flex;
+  width: 100vw;
+  height: 100%;
+  align-items: center;
+  justify-content: space-between;
 }
-.overall-wrapper{
-    height: 40vh;
-    border-bottom: 1px solid #d1d1d1;
-    position: fixed;
-    background-color: #ffffff;
+.overall-wrapper {
+  height: 40vh;
+  border-bottom: 1px solid #d1d1d1;
+  position: fixed;
+  background-color: #ffffff;
 }
-.overall-profile{
-    display: flex;
-    width: 30vw;
-    flex-direction: column;
-    align-items: center;
-    gap:11px;
+.overall-profile {
+  display: flex;
+  width: 30vw;
+  flex-direction: column;
+  align-items: center;
+  gap: 11px;
 }
+<<<<<<< Updated upstream
 .photos-wrapper{
     padding-top: 38vw;
 }
@@ -34,39 +41,54 @@
 .profile-name{
     font-size: 30px;
     padding-bottom: 5px;
+=======
+.photos-wrapper {
+  padding-top: 35vw;
 }
-.profile-username{
-    text-align: center;
-    color: #5E5E5E;
-    font-size: 16px;
+.photos-content {
+  padding-left: 30px;
+  margin-bottom: 30px;
 }
-.overall-stats{
-    display: flex;
-    width: 70vw;
-    flex-direction: column;
-    align-items: center;
+.name-wrapper {
 }
-.overall-stats-wrapper{
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.profile-name {
+  font-size: 30px;
+  padding-bottom: 5px;
+>>>>>>> Stashed changes
 }
-.stats-wrapper-content{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 160px;
-    align-items: center;
-    width: 60vw;
+.profile-username {
+  text-align: center;
+  color: #5e5e5e;
+  font-size: 16px;
+}
+.overall-stats {
+  display: flex;
+  width: 70vw;
+  flex-direction: column;
+  align-items: center;
+}
+.overall-stats-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.stats-wrapper-content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 160px;
+  align-items: center;
+  width: 60vw;
 }
 
-.profile-username{
-    color: gray;
-    font-size: 10px;
+.profile-username {
+  color: gray;
+  font-size: 10px;
 }
-.photos-wrapper{
-    height: 60vh;
+.photos-wrapper {
+  height: 60vh;
 }
+<<<<<<< Updated upstream
 .photos-content{
     display: flex;
     flex-direction: column;
@@ -81,10 +103,24 @@
     background-color: gray;
     border-radius: 8px;
     /* border: 1px solid red; */
+=======
+.photos-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  gap: 20px;
 }
-.photo{
-    width: 100px;
+.photo-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+>>>>>>> Stashed changes
 }
+.photo {
+  width: 100px;
+}
+<<<<<<< Updated upstream
 .photo-info{
     display: flex;
     flex-direction: row;
@@ -116,3 +152,15 @@
     width: 200px;
     text-align: center;
 }
+=======
+.likes {
+  display: flex;
+  gap: 10px;
+  flex-direction: row;
+  align-items: center;
+}
+.heart-icon {
+  width: 20px;
+  height: 20px;
+}
+>>>>>>> Stashed changes
