@@ -104,7 +104,7 @@ function ProfileView() {
 
             <div className="filter-item image">Preview</div>
 
-            <div className="filter-item filter-likes">Likes</div>
+            <div className="filter-item filter-likes">Likes
             <img
               id="likes"
               onClick={filterByLikes}
@@ -112,7 +112,8 @@ function ProfileView() {
               src={chevronDown}
               alt=""
               style={likeChevronStyle}
-            />
+            /></div>
+            
           </div>
         </div>
       </section>
@@ -131,7 +132,7 @@ function ProfileView() {
                   {/* TODO: Find out why this promt is not showing up in view*/}
                   <div className="likes-amount"> {photo?.likes}</div>
                 </div>
-                <div className="id">{photo.id}</div>
+                {/* <div className="id">{photo.id}</div> */}
                 <button onClick={() => handleInsightsClick(photo.id)}>
                   Get Insights
                 </button>
