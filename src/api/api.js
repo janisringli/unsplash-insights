@@ -53,11 +53,14 @@ export async function getPhotos(username) {
             hour12: false,
             // timeZoneName: 'short'
           });
-           let downloadRate = (photoData.downloads / photoData.views) * 100;
-           if (photoData.downloads == 0){
+          let downloadRate = (photoData.downloads / photoData.views) * 100;
+          if (photoData.downloads == 0){
             downloadRate = 0
-           }
-        return { ...photoData, created_at: formattedDate, download_rate: Math.round(downloadRate * 100) / 100 };
+          }
+          const formattedViews = new Intl.NumberFormat('en-GB').format(photoData.views);
+const formattedDownloads = new Intl.NumberFormat('en-GB').format(photoData.downloads);
+return { ...photoData, created_at: formattedDate, download_rate: Math.round(downloadRate * 100) / 100, views: formattedViews, downloads: formattedDownloads };
+
         })
       );
       photos = photos.concat(formattedPhotos);
@@ -69,6 +72,7 @@ export async function getPhotos(username) {
     console.log(error);
   }
 }
+
 
 
 
