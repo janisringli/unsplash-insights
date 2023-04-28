@@ -96,7 +96,7 @@ padding-left: -2px;
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 50px;
+  width: 75px;
   align-self: center;
 }
 
@@ -156,7 +156,7 @@ padding-left: -2px;
   width: 75px;
 }
 .date {
-  width: 202px;
+  width: 201px;
 }
 .chevronDown {
   width: 10px;

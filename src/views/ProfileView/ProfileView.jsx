@@ -18,6 +18,8 @@ function ProfileView() {
   const [stats, setStats] = useState({});
   const [photos, setPhotos] = useState([]);
   const [likeChevronUp, setLikeChevronUp] = useState(false);
+  const [dateChevronUp, setDateChevronUp] = useState(false);
+
   let navigateTo = useNavigate();
 
   setUsername(urlUsername ?? username);
@@ -59,6 +61,23 @@ function ProfileView() {
     transition: "transform 0.2s ease-in-out",
   };
 
+  // -------------------------
+  function filterByDate() {
+    setDateChevronUp(!dateChevronUp);
+
+    if (!dateChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
+      setPhotos(sortedPhotos);
+    }
+    if (dateChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+      setPhotos(sortedPhotos);
+    }
+  }
+  const dateChevronStyle = {
+    transform: dateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
   return (
     <div className="App">
       <Header></Header>
@@ -99,6 +118,7 @@ function ProfileView() {
                 className="chevronDown"
                 src={chevronDown}
                 alt=""
+                style={dateChevronStyle}
               />
             </div>
 

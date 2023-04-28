@@ -29,7 +29,21 @@ export async function getPhotos(username) {
       );
 
       const payload = await response.json();
-      photos = photos.concat(payload);
+      const formattedPhotos = payload.map(photo => {
+        const dateObj = new Date(photo.created_at);
+        const formattedDate = dateObj.toLocaleDateString('de-CH', { 
+          year: 'numeric', 
+          month: 'short', 
+          day: 'numeric',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          hour12: false,
+          // timeZoneName: 'short'
+        });
+        return { ...photo, created_at: formattedDate };
+      });
+      photos = photos.concat(formattedPhotos);
     }
 
     return photos;
