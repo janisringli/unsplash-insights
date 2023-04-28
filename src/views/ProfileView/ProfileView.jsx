@@ -17,8 +17,16 @@ function ProfileView() {
 
   const [stats, setStats] = useState({});
   const [photos, setPhotos] = useState([]);
+
+  //-------------------- Filteritems -----------------------
   const [likeChevronUp, setLikeChevronUp] = useState(false);
   const [dateChevronUp, setDateChevronUp] = useState(false);
+  const [viewsChevronUp, setViewsChevronUp] = useState(false);
+  const [downloadsChevronUp, setDownloadsChevronUp] = useState(false);
+  const [downloadRateChevronUp, setDownloadRateChevronUp] = useState(false);
+
+
+
 
   let navigateTo = useNavigate();
 
@@ -42,7 +50,7 @@ function ProfileView() {
     console.log("sort by date");
   }
 
-  // ------------------------
+  // ----------- Sort by Likes -------------
 
   function filterByLikes() {
     setLikeChevronUp(!likeChevronUp);
@@ -61,7 +69,7 @@ function ProfileView() {
     transition: "transform 0.2s ease-in-out",
   };
 
-  // -------------------------
+  // ---------- Sort by Date ---------------
   function filterByDate() {
     setDateChevronUp(!dateChevronUp);
 
@@ -78,6 +86,82 @@ function ProfileView() {
     transform: dateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
     transition: "transform 0.2s ease-in-out",
   };
+ 
+   // ----------- Sort by Views --------------
+   function filterByViews() {
+    setViewsChevronUp(!viewsChevronUp);
+  
+    if (!viewsChevronUp) {
+      const sortedPhotos = [...photos].sort((a, b) => {
+        const viewsA = Number(a.views.replace(/,/g, ''));
+        const viewsB = Number(b.views.replace(/,/g, ''));
+        return viewsB - viewsA;
+      });
+  
+      setPhotos(sortedPhotos);
+    }
+    if (viewsChevronUp) {
+      const sortedPhotos = [...photos].sort((a, b) => {
+        const viewsA = Number(a.views.replace(/,/g, ''));
+        const viewsB = Number(b.views.replace(/,/g, ''));
+        return viewsA - viewsB;
+      });
+  
+      setPhotos(sortedPhotos);
+    }
+  }
+  const viewsChevronStyle = {
+    transform: viewsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  
+  // ------------- Sort by Downloads ------------
+  function filterByDownloads() {
+    setDownloadsChevronUp(!downloadsChevronUp);
+
+    if (!downloadsChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => b.downloads - a.downloads);
+
+        console.log("views Asscending")
+        console.log(sortedPhotos)
+
+      setPhotos(sortedPhotos);
+    }
+    if (downloadsChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => a.downloads - b.downloads);
+
+        console.log(sortedPhotos)
+      setPhotos(sortedPhotos);
+    }
+  }
+  const downloadsChevronStyle = {
+    transform: downloadsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  //------------- Sort by Download Rate ---------------
+  function filterByDownloadRate() {
+    setDownloadRateChevronUp(!downloadRateChevronUp);
+
+    if (!downloadRateChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => b.download_rate - a.download_rate);
+
+        console.log("views Asscending")
+        console.log(sortedPhotos)
+
+      setPhotos(sortedPhotos);
+    }
+    if (downloadRateChevronUp) {
+        const sortedPhotos = [...photos].sort((a, b) => a.download_rate - b.download_rate);
+
+        console.log(sortedPhotos)
+      setPhotos(sortedPhotos);
+    }
+  }
+  const downloadRateChevronStyle = {
+    transform: downloadRateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  
   return (
     <div className="App">
       <Header></Header>
@@ -133,7 +217,40 @@ function ProfileView() {
               alt=""
               style={likeChevronStyle}
             /></div>
-            
+            <div className="filter-item views">
+              Views
+              <img
+                id="date"
+                onClick={filterByViews}
+                className="chevronDown"
+                src={chevronDown}
+                alt=""
+                style={viewsChevronStyle}
+              />
+            </div>
+            <div className="filter-item downloads">
+             Downloads
+              <img
+                id="date"
+                onClick={filterByDownloads}
+                className="chevronDown"
+                src={chevronDown}
+                alt=""
+                style={downloadsChevronStyle}
+              />
+            </div>
+            <div className="filter-item download-rate">
+             Download Rate
+              <img
+                id="date"
+                onClick={filterByDownloadRate}
+                className="chevronDown"
+                src={chevronDown}
+                alt=""
+                style={downloadRateChevronStyle}
+              />
+            </div>
+          
           </div>
         </div>
       </section>
@@ -142,16 +259,18 @@ function ProfileView() {
           {photos.map((photo) => (
             <div className="photo-item" key={photo.id}>
               <div className="photo-created-at">{photo?.created_at}</div>
-              <img className="photo" src={photo?.urls?.regular} alt="" />
+              
+                <a href={photo?.links?.html} target="_blank"><img className="photo" src={photo?.urls?.small} alt="" ></img></a>
               <div className="photo-info">
-                {/* <div className="views"></div>
-                            <div className="downloads"></div> */}
-                <div className="likes">
-                  <img className="heart-icon" src={heart} alt="" />
-                  {/* <div className="liked-by-user">{photo.liked_by_user}</div> */}
-                  {/* TODO: Find out why this promt is not showing up in view*/}
-                  <div className="likes-amount"> {photo?.likes}</div>
+                <div className="likes-container">
+                    <div className="likes">
+                        <img className="heart-icon" src={heart} alt="" />
+                        <div className="likes-amount"> {photo?.likes}</div>
+                    </div>
                 </div>
+                <div className="views-amount">{photo?.views}</div>
+                <div className="downloads-amount">{photo?.downloads}</div>
+                <div className="download-rate-amount">{photo?.download_rate}%</div>
                 {/* <div className="id">{photo.id}</div> */}
                 <button onClick={() => handleInsightsClick(photo.id)}>
                   Get Insights
