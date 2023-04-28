@@ -1,0 +1,29 @@
+.unsplash-credit{
+    color: #5E5E5E;
+    font-size: 13px;
+}
+.link-to-unsplash{
+    color: inherit;
+    
+}
+.single-image{
+    padding-bottom: 6px;
+    width: 100%
+}
+.single-image-container{
+    padding-top: 60px;
+
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+.single-photo-view-wrapper{
+    width: 100vw;
+    display: flex;
+    justify-content: space-evenly;
+}
+.image-info{
+    width:35vw;
+    height: 30vw;
+}
