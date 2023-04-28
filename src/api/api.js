@@ -23,27 +23,45 @@ export async function getPhotos(username) {
           method: "GET",
           headers: new Headers({
             Authorization:
-              "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+              // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+              "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
           }),
         }
       );
 
       const payload = await response.json();
-      const formattedPhotos = payload.map(photo => {
-        const dateObj = new Date(photo.created_at);
-        const formattedDate = dateObj.toLocaleDateString('de-CH', { 
-          year: 'numeric', 
-          month: 'short', 
-          day: 'numeric',
-          hour: 'numeric',
-          minute: 'numeric',
-          second: 'numeric',
-          hour12: false,
-          // timeZoneName: 'short'
-        });
-        return { ...photo, created_at: formattedDate };
-      });
+      const formattedPhotos = await Promise.all(
+        payload.map(async (photo) => {
+          const photoResponse = await fetch(photo.links.self, {
+            method: "GET",
+            headers: new Headers({
+              Authorization:
+                // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+              "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+
+            }),
+          });
+          const photoData = await photoResponse.json();
+          const dateObj = new Date(photoData.created_at);
+          const formattedDate = dateObj.toLocaleDateString("de-CH", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+            hour: "numeric",
+            minute: "numeric",
+            second: "numeric",
+            hour12: false,
+            // timeZoneName: 'short'
+          });
+           let downloadRate = (photoData.downloads / photoData.views) * 100;
+           if (photoData.downloads == 0){
+            downloadRate = 0
+           }
+        return { ...photoData, created_at: formattedDate, download_rate: Math.round(downloadRate * 100) / 100 };
+        })
+      );
       photos = photos.concat(formattedPhotos);
+      console.log(photos)
     }
 
     return photos;
@@ -52,13 +70,18 @@ export async function getPhotos(username) {
   }
 }
 
+
+
 export async function getSinglePhotos(photoId) {
   try {
     console.log(photoId);
     const response = await fetch(`https://api.unsplash.com/photos/${photoId}`, {
       method: "GET",
       headers: new Headers({
-        Authorization: "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        Authorization:
+        //  "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+
       }),
     });
     const payload = await response.json();
@@ -78,7 +101,9 @@ export async function getStats(username) {
         method: "GET",
         headers: new Headers({
           Authorization:
-            "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+            // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+            "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+
         }),
       }
     );
@@ -96,7 +121,10 @@ export async function getMonthlyStats() {
     const response = await fetch(`https://api.unsplash.com/stats/monthly`, {
       method: "GET",
       headers: new Headers({
-        Authorization: "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        Authorization: 
+        //"Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+
       }),
     });
     const payload = await response.json();
@@ -111,7 +139,10 @@ export async function getTotalStats() {
     const response = await fetch(`https://api.unsplash.com/stats/total`, {
       method: "GET",
       headers: new Headers({
-        Authorization: "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        Authorization:
+        //  "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+
       }),
     });
     const payload = await response.json();
