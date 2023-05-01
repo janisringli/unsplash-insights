@@ -1,5 +1,6 @@
 .header-wrapper{
     box-sizing: border-box;
+    background-color: #ffffff;
     width: 100vw;
     height: 5vh;
     z-index: 1;
