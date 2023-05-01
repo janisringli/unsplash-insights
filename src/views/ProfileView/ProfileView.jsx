@@ -38,8 +38,12 @@ function ProfileView() {
       const photosData = await getPhotos(username);
       setPhotos(photosData);
       setStats(statsData);
+      
+
     }
+
     retrieveData();
+
   }, [username]);
   
 
@@ -48,7 +52,6 @@ function ProfileView() {
     navigateTo(`/photo/${id}`); // Navigate to the photo's insights page
   };
   
-
   function filterPhotos(sortType) {
     let sortedPhotos = [];
   
@@ -241,8 +244,8 @@ function ProfileView() {
                         <div className="likes-amount"> {photo?.likes}</div>
                     </div>
                 </div>
-                <div className="views-amount">{photo?.views}</div>
-                <div className="downloads-amount">{photo?.downloads}</div>
+                <div className="views-amount">{photo?.statistics?.views.total}</div>
+                <div className="downloads-amount">{photo?.statistics?.downloads?.total}</div>
                 <div className="download-rate-amount">{photo?.download_rate}%</div>
                 {/* <div className="id">{photo.id}</div> */}
                 <button onClick={() => handleInsightsClick(photo.id)}>

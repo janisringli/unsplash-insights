@@ -11,7 +11,6 @@ function SinglePhotoView() {
   const [singlePhotoStats, setSinglePhotoStats] = useState({});
 
   const { photoId } = useParams();
-  Chart.defaults.backgroundColor = '#9BD0F5';
   Chart.defaults.color = '#000';
   useEffect(() => {
     async function retrieveData() {
@@ -38,11 +37,32 @@ function SinglePhotoView() {
             {
               label: "Downloads",
               data: downloadsData.map((row) => row.value),
+              backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
+              borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)", // set borderColor to singlePhoto.color if it exists, or transparent otherwise
+              borderWidth: 1,
             },
           ],
         },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMin: 0,
+                  suggestedMax: Math.max(...downloadsData)
+                },
+                gridLines: {
+                  color: "#ffffff", // set grid line color to singlePhoto.color if it exists, or a light gray otherwise
+                  zeroLineColor: "#ffffff", // set zero grid line color to singlePhoto.color if it exists, or a light gray otherwise
+                },
+              },
+            ],
+          },
+        },
       });
-
+      
       const viewsChart = new Chart("views-chart", {
         type: "line",
         data: {
@@ -51,10 +71,33 @@ function SinglePhotoView() {
             {
               label: "Views",
               data: viewsData.map((row) => row.value),
+              backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
+              borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)", // set borderColor to singlePhoto.color if it exists, or transparent otherwise
+              borderWidth: 1,
             },
           ],
         },
+        options: {
+          scales: {
+            yAxes: [
+              {
+                ticks: {
+                  beginAtZero: true,
+                  stepSize: 1,
+                  suggestedMin: 0,
+                  suggestedMax: Math.max(...viewsData)
+                },
+                gridLines: {
+                  color: "#ffffff", // set grid line color to singlePhoto.color if it exists, or a light gray otherwise
+                  zeroLineColor: "#ffffff", // set zero grid line color to singlePhoto.color if it exists, or a light gray otherwise
+                },
+              },
+            ],
+          },
+        },
       });
+      
+      
 
       return () => {
         downloadsChart.destroy();
