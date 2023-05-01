@@ -25,10 +25,11 @@ function SinglePhotoView() {
         <div className="image-info">hello</div>
         <div className="image-info">hello</div>
         <div className="single-image-container">
-          <img className="single-image"
+        <a className="link-to-unsplash" href={singlePhoto?.links?.html} target="_blank"><img className="single-image"
             key={singlePhoto.id}
             src={singlePhoto?.urls?.small}
-          />
+          /></a>
+          
           <p className="unsplash-credit">Photo by <a className="link-to-unsplash" href={singlePhoto?.user?.links.html} target="_blank">{singlePhoto?.user?.first_name} {singlePhoto?.user?.last_name}</a> on <a className="link-to-unsplash" href={singlePhoto?.links?.html} target="_blank">Unsplash</a></p>
         </div>
         <div className="evaluation-wrapper">
