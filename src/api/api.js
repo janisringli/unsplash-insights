@@ -6,7 +6,7 @@ export async function getPhotos(username) {
         method: "GET",
         headers: new Headers({
           Authorization:
-            "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
+          `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`,
         }),
       }
     );
@@ -23,8 +23,7 @@ export async function getPhotos(username) {
           method: "GET",
           headers: new Headers({
             Authorization:
-              // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-              "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+              `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
           }),
         }
       );
@@ -36,8 +35,7 @@ export async function getPhotos(username) {
             method: "GET",
             headers: new Headers({
               Authorization:
-                // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-              "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+                `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
 
             }),
           });
@@ -83,8 +81,7 @@ export async function getSinglePhotos(photoId) {
       method: "GET",
       headers: new Headers({
         Authorization:
-        //  "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+        `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
 
       }),
     });
@@ -105,8 +102,7 @@ export async function getStats(username) {
         method: "GET",
         headers: new Headers({
           Authorization:
-            // "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-            "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+            `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
 
         }),
       }
@@ -126,8 +122,7 @@ export async function getMonthlyStats() {
       method: "GET",
       headers: new Headers({
         Authorization: 
-        //"Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+        `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
 
       }),
     });
@@ -144,8 +139,7 @@ export async function getTotalStats() {
       method: "GET",
       headers: new Headers({
         Authorization:
-        //  "Client-ID 8AaOzWIzBjToHkNNYtgTYyBlnDcNr4-A_uBGakwF5BI",
-        "Client-ID DALumgIQYnnoRxZocgSXbGNgchuspZ-KJYNkMkg3hsU"
+        `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
 
       }),
     });
