@@ -6,7 +6,7 @@ export async function getPhotos(username) {
         method: "GET",
         headers: new Headers({
           Authorization:
-          `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`,
+            `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`,
         }),
       }
     );
@@ -17,8 +17,8 @@ export async function getPhotos(username) {
     let photos = [];
 
     for (let page = 1; page <= totalPages; page++) {
-      const response = await fetch(
-        `https://api.unsplash.com/users/${username}/photos/?per_page=${perPage}&page=${page}`,
+      const statsResponse = await fetch(
+        `https://api.unsplash.com/users/${username}/photos/?per_page=${perPage}&page=${page}&stats=true`,
         {
           method: "GET",
           headers: new Headers({
@@ -27,49 +27,44 @@ export async function getPhotos(username) {
           }),
         }
       );
-
-      const payload = await response.json();
-      const formattedPhotos = await Promise.all(
-        payload.map(async (photo) => {
-          const photoResponse = await fetch(photo.links.self, {
-            method: "GET",
-            headers: new Headers({
-              Authorization:
-                `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
-
-            }),
-          });
-          const photoData = await photoResponse.json();
-          const dateObj = new Date(photoData.created_at);
-          const formattedDate = dateObj.toLocaleDateString("de-CH", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-            second: "numeric",
-            hour12: false,
-            // timeZoneName: 'short'
-          });
-          let downloadRate = (photoData.downloads / photoData.views) * 100;
-          if (photoData.downloads == 0){
-            downloadRate = 0
-          }
-          const formattedViews = new Intl.NumberFormat('en-GB').format(photoData.views);
-const formattedDownloads = new Intl.NumberFormat('en-GB').format(photoData.downloads);
-return { ...photoData, created_at: formattedDate, download_rate: Math.round(downloadRate * 100) / 100, views: formattedViews, downloads: formattedDownloads };
-
-        })
-      );
-      photos = photos.concat(formattedPhotos);
-      console.log(photos)
+      const payload = await statsResponse.json();
+      photos = photos.concat(payload);
     }
 
-    return photos;
+    const formattedPhotos = photos.map((photo) => {
+      const dateObj = new Date(photo.created_at);
+      const formattedDate = dateObj.toLocaleDateString("de-CH", {
+        year: "numeric",
+        month: "short",
+        day: "numeric",
+        hour: "numeric",
+        minute: "numeric",
+        second: "numeric",
+        hour12: false,
+      });
+            const formattedViews = new Intl.NumberFormat('en-GB').format(photo.statistics?.views.total);
+ const formattedDownloads = new Intl.NumberFormat('en-GB').format(photo.statistics?.downloads.total);
+      let downloadRate = (photo.statistics.downloads.total / photo.statistics.views.total) * 100;
+      if (photo.statistics.downloads.total === 0) {
+        downloadRate = 0;
+      }
+      return {
+        ...photo,
+        created_at: formattedDate,
+        download_rate: Math.round(downloadRate * 100) / 100,
+        downloads: formattedDownloads,
+        views: formattedViews
+      };
+    });
+
+    return formattedPhotos;
   } catch (error) {
     console.log(error);
   }
 }
+
+
+       
 
 
 
