@@ -20,7 +20,7 @@ function ProfileView() {
 
   //-------------------- Filteritems -----------------------
   const [likeChevronUp, setLikeChevronUp] = useState(false);
-  const [dateChevronUp, setDateChevronUp] = useState(false);
+  const [dateChevronUp, setDateChevronUp] = useState(true);
   const [viewsChevronUp, setViewsChevronUp] = useState(false);
   const [downloadsChevronUp, setDownloadsChevronUp] = useState(false);
   const [downloadRateChevronUp, setDownloadRateChevronUp] = useState(false);
@@ -41,126 +41,99 @@ function ProfileView() {
     }
     retrieveData();
   }, [username]);
+  
 
   const handleInsightsClick = (id) => {
     console.log(id);
     navigateTo(`/photo/${id}`); // Navigate to the photo's insights page
   };
-  function filterByDate() {
-    console.log("sort by date");
-  }
-
-  // ----------- Sort by Likes -------------
-
-  function filterByLikes() {
-    setLikeChevronUp(!likeChevronUp);
-
-    if (!likeChevronUp) {
-      const sortedPhotos = [...photos].sort((a, b) => b.likes - a.likes);
-      setPhotos(sortedPhotos);
-    }
-    if (likeChevronUp) {
-      const sortedPhotos = [...photos].sort((a, b) => a.likes - b.likes);
-      setPhotos(sortedPhotos);
-    }
-  }
-  const likeChevronStyle = {
-    transform: likeChevronUp ? "rotate(180deg)" : "rotate(0deg)",
-    transition: "transform 0.2s ease-in-out",
-  };
-
-  // ---------- Sort by Date ---------------
-  function filterByDate() {
-    setDateChevronUp(!dateChevronUp);
-
-    if (!dateChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => new Date(b.created_at) - new Date(a.created_at)); 
-      setPhotos(sortedPhotos);
-    }
-    if (dateChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
-      setPhotos(sortedPhotos);
-    }
-  }
-  const dateChevronStyle = {
-    transform: dateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
-    transition: "transform 0.2s ease-in-out",
-  };
- 
-   // ----------- Sort by Views --------------
-   function filterByViews() {
-    setViewsChevronUp(!viewsChevronUp);
   
-    if (!viewsChevronUp) {
-      const sortedPhotos = [...photos].sort((a, b) => {
-        const viewsA = Number(a.views.replace(/,/g, ''));
-        const viewsB = Number(b.views.replace(/,/g, ''));
-        return viewsB - viewsA;
-      });
+
+  function filterPhotos(sortType) {
+    let sortedPhotos = [];
   
-      setPhotos(sortedPhotos);
+    switch(sortType) {
+      case 'likes':
+        sortedPhotos = [...photos].sort((a, b) => {
+          return likeChevronUp ? a.likes - b.likes : b.likes - a.likes;
+        });
+        setLikeChevronUp(!likeChevronUp);
+        setDateChevronUp(false);
+        setViewsChevronUp(false);
+        setDownloadsChevronUp(false);
+        setDownloadRateChevronUp(false);  
+        break;
+      case 'date':
+        sortedPhotos = [...photos].sort((a, b) => {
+          return dateChevronUp ? new Date(a.created_at) - new Date(b.created_at) : new Date(b.created_at) - new Date(a.created_at);
+        });
+        setDateChevronUp(!dateChevronUp);
+        setLikeChevronUp(false);
+        setViewsChevronUp(false);
+        setDownloadsChevronUp(false);
+        setDownloadRateChevronUp(false); 
+        break;
+      case 'views':
+        sortedPhotos = [...photos].sort((a, b) => {
+          const viewsA = Number(a.views.replace(/,/g, ''));
+          const viewsB = Number(b.views.replace(/,/g, ''));
+          return viewsChevronUp ? viewsA - viewsB : viewsB - viewsA;
+        });
+        setViewsChevronUp(!viewsChevronUp);
+        setDateChevronUp(false);
+        setLikeChevronUp(false);
+        setDownloadsChevronUp(false);
+        setDownloadRateChevronUp(false); 
+        break;
+      case 'downloads':
+        sortedPhotos = [...photos].sort((a, b) => {
+            const downloadsA = Number(a.downloads.replace(/,/g, ''));
+          const downloadsB = Number(b.downloads.replace(/,/g, ''));
+          return downloadsChevronUp ? downloadsA - downloadsB : downloadsB - downloadsA;
+        });
+        setDownloadsChevronUp(!downloadsChevronUp);
+        setDateChevronUp(false);
+        setViewsChevronUp(false);
+        setLikeChevronUp(false);
+        setDownloadRateChevronUp(false); 
+        break;
+      case 'downloadRate':
+        sortedPhotos = [...photos].sort((a, b) => {
+          return downloadRateChevronUp ? a.download_rate - b.download_rate : b.download_rate - a.download_rate;
+        });
+        setDownloadRateChevronUp(!downloadRateChevronUp);
+        setDateChevronUp(false);
+        setViewsChevronUp(false);
+        setDownloadsChevronUp(false);
+        setLikeChevronUp(false); 
+        break;
+      default:
+        sortedPhotos = photos;
     }
-    if (viewsChevronUp) {
-      const sortedPhotos = [...photos].sort((a, b) => {
-        const viewsA = Number(a.views.replace(/,/g, ''));
-        const viewsB = Number(b.views.replace(/,/g, ''));
-        return viewsA - viewsB;
-      });
   
-      setPhotos(sortedPhotos);
-    }
-  }
-  const viewsChevronStyle = {
-    transform: viewsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
-    transition: "transform 0.2s ease-in-out",
-  };
-  
-  // ------------- Sort by Downloads ------------
-  function filterByDownloads() {
-    setDownloadsChevronUp(!downloadsChevronUp);
-
-    if (!downloadsChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => b.downloads - a.downloads);
-
-        console.log("views Asscending")
-        console.log(sortedPhotos)
-
-      setPhotos(sortedPhotos);
-    }
-    if (downloadsChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => a.downloads - b.downloads);
-
-        console.log(sortedPhotos)
-      setPhotos(sortedPhotos);
-    }
-  }
-  const downloadsChevronStyle = {
-    transform: downloadsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
-    transition: "transform 0.2s ease-in-out",
-  };
-  //------------- Sort by Download Rate ---------------
-  function filterByDownloadRate() {
-    setDownloadRateChevronUp(!downloadRateChevronUp);
-
-    if (!downloadRateChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => b.download_rate - a.download_rate);
-
-        console.log("views Asscending")
-        console.log(sortedPhotos)
-
-      setPhotos(sortedPhotos);
-    }
-    if (downloadRateChevronUp) {
-        const sortedPhotos = [...photos].sort((a, b) => a.download_rate - b.download_rate);
-
-        console.log(sortedPhotos)
-      setPhotos(sortedPhotos);
-    }
+    setPhotos(sortedPhotos);
   }
   const downloadRateChevronStyle = {
     transform: downloadRateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
     transition: "transform 0.2s ease-in-out",
   };
+  const downloadsChevronStyle = {
+    transform: downloadsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  const viewsChevronStyle = {
+    transform: viewsChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  const dateChevronStyle = {
+    transform: dateChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  const likeChevronStyle = {
+    transform: likeChevronUp ? "rotate(180deg)" : "rotate(0deg)",
+    transition: "transform 0.2s ease-in-out",
+  };
+  
   
   return (
     <div className="App">
@@ -175,7 +148,7 @@ function ProfileView() {
             />
             <div className="name-wrapper">
               <div className="profile-name">{stats?.name}</div>
-              <div className="profile-username">@{stats?.username}</div>
+              <a className="link-to-unsplash" href={stats?.links?.html} target="_blank"><div className="profile-username">@{stats?.username}</div></a>
             </div>
             {/* <div className="profile-bio">{stats?.bio}</div> */}
             <div className="profile-location">{stats?.location}</div>
@@ -198,7 +171,7 @@ function ProfileView() {
               Created At
               <img
                 id="date"
-                onClick={filterByDate}
+                onClick={() => filterPhotos('date')}
                 className="chevronDown"
                 src={chevronDown}
                 alt=""
@@ -211,7 +184,7 @@ function ProfileView() {
             <div className="filter-item filter-likes">Likes
             <img
               id="likes"
-              onClick={filterByLikes}
+              onClick={() => filterPhotos('likes')}
               className="chevronDown"
               src={chevronDown}
               alt=""
@@ -221,7 +194,7 @@ function ProfileView() {
               Views
               <img
                 id="date"
-                onClick={filterByViews}
+                onClick={() => filterPhotos('views')}
                 className="chevronDown"
                 src={chevronDown}
                 alt=""
@@ -232,7 +205,7 @@ function ProfileView() {
              Downloads
               <img
                 id="date"
-                onClick={filterByDownloads}
+                onClick={() => filterPhotos('downloads')}
                 className="chevronDown"
                 src={chevronDown}
                 alt=""
@@ -243,7 +216,7 @@ function ProfileView() {
              Download Rate
               <img
                 id="date"
-                onClick={filterByDownloadRate}
+                onClick={() => filterPhotos('downloadRate')}
                 className="chevronDown"
                 src={chevronDown}
                 alt=""
@@ -260,7 +233,7 @@ function ProfileView() {
             <div className="photo-item" key={photo.id}>
               <div className="photo-created-at">{photo?.created_at}</div>
               
-                <a href={photo?.links?.html} target="_blank"><img className="photo" src={photo?.urls?.small} alt="" ></img></a>
+                <a className="preview" href={photo?.links?.html} target="_blank"><img className="photo" src={photo?.urls?.small} alt="" ></img></a>
               <div className="photo-info">
                 <div className="likes-container">
                     <div className="likes">
