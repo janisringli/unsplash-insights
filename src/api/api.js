@@ -86,7 +86,6 @@ export async function getSinglePhotos(photoId) {
       }),
     });
     const payload = await response.json();
-    console.log(payload);
     return payload;
   } catch (error) {
     console.log(error);
@@ -115,6 +114,53 @@ export async function getStats(username) {
 
   return await response.json;
 }
+
+export async function getSinglePhotoStats(photoId) {
+  try {
+    const response = await fetch(
+      `https://api.unsplash.com/photos/${photoId}/statistics`,
+      {
+        method: "GET",
+        headers: new Headers({
+          Authorization:
+            `Client-ID ${import.meta.env.VITE_REACT_APP_API_TOKEN}`
+        }),
+      }
+    );
+    const payload = await response.json();
+
+    // Format date strings in historical downloads
+    const formattedDownloads = payload.downloads.historical.values.map((value) => {
+      const date = new Date(value.date);
+      const formattedDate = date.toLocaleDateString("de-CH", {
+        month: "short",
+        day: "numeric",
+        hour12: false,
+      });
+      return { ...value, date: formattedDate };
+    });
+    payload.downloads.historical.values = formattedDownloads;
+
+    // Format date strings in historical views
+    const formattedViews = payload.views.historical.values.map((value) => {
+      const date = new Date(value.date);
+      const formattedDate = date.toLocaleDateString("de-CH", {
+        month: "short",
+        day: "numeric",
+        hour12: false,
+      });
+      return { ...value, date: formattedDate };
+    });
+    payload.views.historical.values = formattedViews;
+
+    return payload;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+
+
 
 export async function getMonthlyStats() {
   try {
