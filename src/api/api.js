@@ -14,6 +14,7 @@ export async function getPhotos(username) {
     const totalPhotos = userProfile.total_photos;
     const perPage = 30;
     const totalPages = Math.ceil(totalPhotos / perPage);
+
     let photos = [];
 
     for (let page = 1; page <= totalPages; page++) {
@@ -39,7 +40,6 @@ export async function getPhotos(username) {
         day: "numeric",
         hour: "numeric",
         minute: "numeric",
-        second: "numeric",
         hour12: false,
       });
             const formattedViews = new Intl.NumberFormat('en-GB').format(photo.statistics?.views.total);
@@ -48,6 +48,7 @@ export async function getPhotos(username) {
       if (photo.statistics.downloads.total === 0) {
         downloadRate = 0;
       }
+
       return {
         ...photo,
         created_at: formattedDate,
