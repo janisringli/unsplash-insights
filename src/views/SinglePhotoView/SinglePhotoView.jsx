@@ -23,7 +23,7 @@ function SinglePhotoView() {
 
     retrieveData();
   }, [photoId]);
-
+console.log(singlePhoto)
   useEffect(() => {
     const downloadsData = singlePhotoStats?.downloads?.historical?.values;
     const viewsData = singlePhotoStats?.views?.historical?.values;
@@ -45,8 +45,13 @@ function SinglePhotoView() {
         },
         options: {
           scales: {
+            
             yAxes: [
               {
+                grid:{
+                  display: false,
+                  tickBorderDash: [2,2]
+                },
                 ticks: {
                   beginAtZero: true,
                   stepSize: 1,
@@ -59,6 +64,7 @@ function SinglePhotoView() {
                 },
               },
             ],
+            
           },
         },
       });
@@ -125,7 +131,6 @@ function SinglePhotoView() {
       <div className="chart-wrapper">
         <div className="chart-item"><canvas id="downloads-chart"></canvas> </div>
         <div className="chart-item"> <canvas id="views-chart"></canvas></div>
-       
       </div>
     </div>
     </div>
