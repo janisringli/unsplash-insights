@@ -30,7 +30,9 @@ function ProfileView() {
 
   let navigateTo = useNavigate();
 
-  setUsername(urlUsername ?? username);
+  useEffect(() => {
+    setUsername(urlUsername ?? username);
+  },[setUsername, urlUsername, username])
 
   useEffect(() => {
     async function retrieveData() {
@@ -38,12 +40,8 @@ function ProfileView() {
       const photosData = await getPhotos(username);
       setPhotos(photosData);
       setStats(statsData);
-      
-
     }
-
     retrieveData();
-
   }, [username]);
   
 
