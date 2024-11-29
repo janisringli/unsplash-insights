@@ -23,94 +23,91 @@ function SinglePhotoView() {
 
     retrieveData();
   }, [photoId]);
-console.log(singlePhoto)
-  useEffect(() => {
-    const downloadsData = singlePhotoStats?.downloads?.historical?.values;
-    const viewsData = singlePhotoStats?.views?.historical?.values;
+console.log(singlePhoto.topic_submissions)
 
-    if (downloadsData && viewsData) {
+// console.log(Object.entries(singlePhoto.topic_submissions))
+// let topicSubmissions = singlePhoto.topic_submissions
+// for (const [topic, details] of Object.entries(topicSubmissions)) {
+//   console.log(`Topic: ${topic}`);
+//   console.log(`  Status: ${details.status}`);
+  
+//   if (details.status === 'approved' && details.approved_on) {
+//       console.log(`  Approved On: ${details.approved_on}`);
+//   }
+// }
+useEffect(() => {
+  const downloadsData = singlePhotoStats?.downloads?.historical?.values;
+  const viewsData = singlePhotoStats?.views?.historical?.values;
+
+  if (downloadsData && viewsData) {
       const downloadsChart = new Chart("downloads-chart", {
-        type: "line",
-        data: {
-          labels: downloadsData.map((row) => row.date),
-          datasets: [
-            {
-              label: "Downloads",
-              data: downloadsData.map((row) => row.value),
-              backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
-              borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)", // set borderColor to singlePhoto.color if it exists, or transparent otherwise
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            
-            yAxes: [
-              {
-                grid:{
-                  display: false,
-                  tickBorderDash: [2,2]
-                },
-                ticks: {
-                  beginAtZero: true,
-                  stepSize: 1,
-                  suggestedMin: 0,
-                  suggestedMax: Math.max(...downloadsData)
-                },
-                gridLines: {
-                  color: "#ffffff", // set grid line color to singlePhoto.color if it exists, or a light gray otherwise
-                  zeroLineColor: "#ffffff", // set zero grid line color to singlePhoto.color if it exists, or a light gray otherwise
-                },
-              },
-            ],
-            
+          type: "line",
+          data: {
+              labels: downloadsData.map((row) => row.date),
+              datasets: [
+                  {
+                      label: "Downloads",
+                      data: downloadsData.map((row) => row.value),
+                      backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
+                      borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)",
+                      borderWidth: 1,
+                  },
+              ],
           },
-        },
+          options: {
+              scales: {
+                  y: {
+                      min: 0, // Ensures the axis always starts at 0
+                      suggestedMin: 0, // Suggests 0 as the minimum even for small data ranges
+                      ticks: {
+                          stepSize: 1,
+                      },
+                      grid: {
+                          display: true,
+                      },
+                  },
+              },
+          },
       });
-      
+
       const viewsChart = new Chart("views-chart", {
-        type: "line",
-        data: {
-          labels: viewsData.map((row) => row.date),
-          datasets: [
-            {
-              label: "Views",
-              data: viewsData.map((row) => row.value),
-              backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
-              borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)", // set borderColor to singlePhoto.color if it exists, or transparent otherwise
-              borderWidth: 1,
-            },
-          ],
-        },
-        options: {
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  beginAtZero: true,
-                  stepSize: 1,
-                  suggestedMin: 0,
-                  suggestedMax: Math.max(...viewsData)
-                },
-                gridLines: {
-                  color: "#ffffff", // set grid line color to singlePhoto.color if it exists, or a light gray otherwise
-                  zeroLineColor: "#ffffff", // set zero grid line color to singlePhoto.color if it exists, or a light gray otherwise
-                },
-              },
-            ],
+          type: "line",
+          data: {
+              labels: viewsData.map((row) => row.date),
+              datasets: [
+                  {
+                      label: "Views",
+                      data: viewsData.map((row) => row.value),
+                      backgroundColor: singlePhoto ? singlePhoto.color : "rgba(255, 255, 255, 1)",
+                      borderColor: singlePhoto ? singlePhoto.color : "rgba(0, 0, 0, 0)",
+                      borderWidth: 1,
+                  },
+              ],
           },
-        },
+          options: {
+              scales: {
+                  y: {
+                      min: 0, // Ensures the axis always starts at 0
+                      suggestedMin: 0, // Suggests 0 as the minimum even for small data ranges
+                      ticks: {
+                          stepSize: 1,
+                      },
+                      grid: {
+                          display: true,
+                      },
+                  },
+              },
+          },
       });
-      
-      
 
       return () => {
-        downloadsChart.destroy();
-        viewsChart.destroy();
+          downloadsChart.destroy();
+          viewsChart.destroy();
       };
-    }
-  }, [singlePhotoStats]);
+  }
+}, [singlePhotoStats]);
+
+
 
   return (
     <div className="App">
