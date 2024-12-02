@@ -11,7 +11,6 @@
     width: 100%
 }
 .single-image-container{
-    padding-top: 60px;
 
     width: 300px;
     display: flex;
@@ -19,7 +18,8 @@
     text-align: center;
 }
 .single-photo-view-wrapper{
-    width: 100vw;
+    width: 95vw;
+    padding-top: 5vh;
     display: flex;
     justify-content: space-evenly;
 }
@@ -30,8 +30,8 @@
 .chart-item {
     margin: 0;
     padding: 0;
-    width: 800px;
-    height: 400px;
+    width: 100%;
+    height: calc(width * 0.5);
 }
 .chart-test{
     display: flex;

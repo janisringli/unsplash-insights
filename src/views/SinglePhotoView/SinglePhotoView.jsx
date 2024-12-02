@@ -113,8 +113,10 @@ useEffect(() => {
     <div className="App">
         <Header></Header>
       <div className="single-photo-view-wrapper">
-      <div className="image-info">hello</div>
-        <div className="image-info">hello</div>
+      <div className="image-info">
+      <div className="chart-item"><canvas id="downloads-chart"></canvas> </div>
+      </div>
+        <div className="image-info"> <div className="chart-item"> <canvas id="views-chart"></canvas></div></div>
         <div className="single-image-container">
         <a className="link-to-unsplash" href={singlePhoto?.links?.html} target="_blank"><img className="single-image"
             key={singlePhoto.id}
@@ -126,8 +128,8 @@ useEffect(() => {
       </div>
     <div className="chart-test">
       <div className="chart-wrapper">
-        <div className="chart-item"><canvas id="downloads-chart"></canvas> </div>
-        <div className="chart-item"> <canvas id="views-chart"></canvas></div>
+       
+       
       </div>
     </div>
     </div>
